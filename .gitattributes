@@ -1,0 +1,3 @@
+*.js linguist-language=Javascript
+*.php linguist-language=Javascript
+*.json linguist-language=Javascript
