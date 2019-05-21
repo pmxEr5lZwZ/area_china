@@ -2,6 +2,17 @@
 
 AJAX+JQery简单的城市三级联动插件（可自己维护更新），不通过后台实现，不占用后台资源。
 
+
+
+
+
+
+
+
+
+
+
+
 安装：（温馨提示：请先安装JQery.js，这里不提供下载。）
 
 1.下载area_china.js与area_china.json，并放入程序前台资源文件夹中
@@ -13,6 +24,18 @@ AJAX+JQery简单的城市三级联动插件（可自己维护更新），不通�
 （4）parent_div： 若你的三级联动的每个下拉框都嵌套在各自的父级div的时候，设置父级div的ID（parent_div:"#xxx"）/CLASS(parent_div:".xxx")或直接（parent_div:"div"），若三个框都不在各自的div中，则可以改为[parent_div：false]
 
 3.在前台页面中，省、市、区三个下拉框select中分别添加id=province，id=city，id=district，若需要自定义id请在area_china.js手动更改。
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 更新说明：
