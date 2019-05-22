@@ -15,7 +15,7 @@ AJAX+JQery简单的城市三级联动插件（可自己维护更新），不通�
 
 安装：（温馨提示：请先安装JQery.js，这里不提供下载。）
 
-1.下载area_china.js与area_china.json，并放入程序前台资源文件夹中
+1.下载area_china.js与area_china.json，并放入程序前台资源文件夹中,在前台模板只引用area_china.js一个文件，并把路径保存在meta的path中 [<meta name="path" content="你的文件路径">]
 
 2.打开area_chian.js设置参数(只需4步)
 （1）path：area_china.json的文件路径，
