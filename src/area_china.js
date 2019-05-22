@@ -2,7 +2,7 @@
 
 
 //Setting Start
-var path = "{{ asset('area_china.json') }}"; //Setting area_china.json path
+var path = $('meta[name="path"]').attr('content');; //Setting area_china.json path
 var default_index = "00";  // option default value <option value="00"></option>
 var default_value = "- Unknow -"; //option default value <option value="xxx">- Unknow -</option>
 var parent_div = "div";  //You can set a class/id in <select></select> parent div,at same time please change this setting value as same.

@@ -3240,4 +3240,4 @@ foreach($array as $k => $v){
        }
 
 }
-print_r(json_encode($china));
+print_r(json_encode($china,JSON_UNESCAPED_UNICODE));
