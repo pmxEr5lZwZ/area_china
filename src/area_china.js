@@ -2,8 +2,11 @@
 
 
 //Setting Start
-var path = $('meta[name="path"]').attr('content');; //Setting area_china.json path
-var default_index = "00";  // option default value <option value="00"></option>
+var current_province = $('meta[name="province"]').attr('content');
+var current_city = $('meta[name="city"]').attr('content');
+var current_district = $('meta[name="district"]').attr('content');
+var path = $('meta[name="path"]').attr('content'); //Setting area_china.json path
+var default_index = "";  // option default value <option value=""></option>
 var default_value = "- Unknow -"; //option default value <option value="xxx">- Unknow -</option>
 var parent_div = "div";  //You can set a class/id in <select></select> parent div,at same time please change this setting value as same.
 //If you don't have parent div in <select></select>. Please setting false, [var parent_div = false;].
@@ -17,14 +20,36 @@ var option_list = {};
 city.style.display = "none";
 district.style.display = "none";
 
+
+
 $.getJSON(path,function (data) {
 
     //show the province
-    $.each(data,function (index,value) {
-        CreateOptionList(index,value);
-    });
-
+    getProvince();
     showOption(province);
+    if(current_province != "" && current_province != default_index){
+        $(province).val(current_province);
+        if(Object.keys(data[current_province]).length > 1 && Object.keys(data[current_province]).length <= 3){
+            district.style.display = "";
+            getCity(current_province);
+            if(current_district != "" && current_district != default_index){
+                $(district).val(current_district);
+            }
+        }else if(Object.keys(data[current_province]).length > 3){
+            city.style.display = "";
+            getCity(current_province);
+            if(current_city != "" && current_city != default_index){
+                district.style.display = "";
+                $(city).val(current_city);
+                getDistrict(current_province,current_city);
+                if(current_district != "" && current_district != default_index){
+                    $(district).val(current_district);
+                }
+            }
+
+        }
+    }
+
     //select province and show the city
     $(province).change(function () {
         if(province.value === default_index){
@@ -35,6 +60,7 @@ $.getJSON(path,function (data) {
         getCity(province.value);
     });
 
+
     //select city and show the district
     $(city).change(function () {
         if(city.value === default_index){
@@ -44,22 +70,31 @@ $.getJSON(path,function (data) {
         getDistrict(province.value,city.value);
     });
 
+    function getProvince() {
+        //show the province
+        $.each(data,function (index,value) {
+            CreateOptionList(index,value);
+        });
+    }
     //Get City List
     function getCity(province_id) {
+        //港澳台
         if(Object.keys(data[province_id]).length === 1){
             closeList(city);
             closeList(district);
+            //北京 直辖市
         }else if(Object.keys(data[province_id]).length > 1 && Object.keys(data[province_id]).length <= 3){
             closeList(city);
             getNewList(district);
             $.each(data[province_id],function (index,value) {
                 if(typeof(data[province_id][index]) == "object" ){
                     $.each(data[province_id][index],function (index_2,value_2) {
-                        CreateOptionList(index_2,value_2);
+                        CreateOptionList(index+index_2,value_2);
                     });
                 }
             });
             showOption(district);
+            //三级城市
         }else if(Object.keys(data[province_id]).length > 3){
             closeList(district);
             getNewList(city);
@@ -76,6 +111,11 @@ $.getJSON(path,function (data) {
 
     //Get District List
     function getDistrict(province_id,city_id) {
+        //example 河南 济源市9091
+        if(Object.keys(data[province_id][city_id]) == 'name'){
+            closeList(district);
+            return
+        }
         getNewList(district);
         $.each(data[province_id][city_id],function (index,value) {
             if(typeof(data[province_id][city_id][index]) == "object" ){
@@ -114,6 +154,7 @@ function initList(obj) {
 
 //create option html
 function CreateOptionList(index,value) {
+    //sort list
     if(index.substr(0,1) === "0"){
         var key = index.substr(1);
         option_list[key] = "<option value='"+index+"'>"+value.name+"</option>";
@@ -129,4 +170,5 @@ function showOption(obj) {
     });
     option_list = [];
 }
+
 
